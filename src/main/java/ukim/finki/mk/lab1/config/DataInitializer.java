@@ -30,8 +30,8 @@ public class DataInitializer {
 
         }
         if (authorRepository.count() == 0) { // Avoid duplicates
-            Country usa = countryRepository.findByName("Canada").orElseThrow();
-            Country uk = countryRepository.findByName("Ireland").orElseThrow();
+            Country canada = countryRepository.findByName("Canada").orElseThrow();
+            Country ireland = countryRepository.findByName("Ireland").orElseThrow();
             Country france = countryRepository.findByName("France").orElseThrow();
 
             Author author1 = new Author("Mark", "Twain", canada);
