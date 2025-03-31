@@ -1,6 +1,14 @@
 package ukim.finki.mk.lab1.model.enums;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     LIBRERIAN,
-    MEMBER
+    USER;
+
+
+    @Override
+    public String getAuthority() {
+        return "";
+    }
 }

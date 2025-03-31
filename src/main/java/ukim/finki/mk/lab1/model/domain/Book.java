@@ -1,4 +1,4 @@
-package ukim.finki.mk.lab1.model;
+package ukim.finki.mk.lab1.model.domain;
 
 
 import jakarta.persistence.*;
@@ -12,15 +12,15 @@ import ukim.finki.mk.lab1.model.enums.Category;
 public class Book {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String title;
     @Enumerated(EnumType.STRING)
     private Category category;
     @ManyToOne
     private Author author;
     private Integer availableCopies;
 
-    public Book(String name, Category category, Author author, Integer availableCopies) {
-        this.name = name;
+    public Book(String title, Category category, Author author, Integer availableCopies) {
+        this.title = title;
         this.category = category;
         this.author = author;
         this.availableCopies = availableCopies;

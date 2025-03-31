@@ -2,9 +2,11 @@ package ukim.finki.mk.lab1.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ukim.finki.mk.lab1.model.Book;
+import ukim.finki.mk.lab1.dto.CreateBookDto;
+import ukim.finki.mk.lab1.dto.UpdateBookDto;
+import ukim.finki.mk.lab1.model.domain.Book;
 import ukim.finki.mk.lab1.model.enums.Category;
-import ukim.finki.mk.lab1.service.BookService;
+import ukim.finki.mk.lab1.service.domain.BookService;
 
 import java.util.List;
 
@@ -25,20 +27,13 @@ public class BookController {
 
     @PostMapping("/add")
     public ResponseEntity<Book> addBook(
-            @RequestParam String name,
-            @RequestParam Category category,
-            @RequestParam Long authorId,
-            @RequestParam Integer availableCopies) {
-        return ResponseEntity.ok(bookService.save(name, category, authorId, availableCopies));
+            CreateBookDto createBookDto) {
+        return ResponseEntity.ok(bookService.save(createBookDto).orElseThrow());
     }
     @PutMapping("/edit/{id}")
     public ResponseEntity<Book> editBook(
-            @PathVariable Long id,
-            @RequestParam String name,
-            @RequestParam Category category,
-            @RequestParam Long authorId,
-            @RequestParam Integer availableCopies) {
-        return ResponseEntity.ok(bookService.edit(id, name, category, authorId, availableCopies));
+            UpdateBookDto updateBookDto) {
+        return ResponseEntity.ok(bookService.edit(updateBookDto).orElseThrow());
     }
 
     @DeleteMapping("/delete/{id}")

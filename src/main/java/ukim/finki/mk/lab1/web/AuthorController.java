@@ -3,9 +3,10 @@ package ukim.finki.mk.lab1.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ukim.finki.mk.lab1.model.Author;
-import ukim.finki.mk.lab1.repository.AuthorRepository;
-import ukim.finki.mk.lab1.service.AuthorService;
+import ukim.finki.mk.lab1.dto.CreateAuthorDto;
+import ukim.finki.mk.lab1.dto.UpdateAuthorDto;
+import ukim.finki.mk.lab1.model.domain.Author;
+import ukim.finki.mk.lab1.service.domain.AuthorService;
 
 import java.util.List;
 
@@ -25,19 +26,13 @@ public class AuthorController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<Author> addAuthor(
-            @RequestParam String name,
-            @RequestParam String surname ,
-            @RequestParam Long countryId) {
-        return ResponseEntity.ok(authorService.save(name,surname, countryId));
+    public ResponseEntity<Author> addAuthor(CreateAuthorDto createAuthorDto) {
+        return ResponseEntity.ok(authorService.save(createAuthorDto).orElseThrow());
     }
     @PutMapping("/edit/{id}")
     public ResponseEntity<Author> editAuthor(
-            @PathVariable Long id,
-            @RequestParam String name,
-            @RequestParam String surname,
-            @RequestParam Long countryId) {
-        return ResponseEntity.ok(authorService.edit(id, name, surname, countryId));
+            UpdateAuthorDto updateAuthorDto) {
+        return ResponseEntity.ok(authorService.edit(updateAuthorDto).orElseThrow());
     }
 
     @DeleteMapping("/delete/{id}")

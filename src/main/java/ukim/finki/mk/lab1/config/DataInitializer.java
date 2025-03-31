@@ -2,8 +2,8 @@ package ukim.finki.mk.lab1.config;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import ukim.finki.mk.lab1.model.Author;
-import ukim.finki.mk.lab1.model.Country;
+import ukim.finki.mk.lab1.model.domain.Author;
+import ukim.finki.mk.lab1.model.domain.Country;
 import ukim.finki.mk.lab1.repository.AuthorRepository;
 import ukim.finki.mk.lab1.repository.CountryRepository;
 
@@ -41,5 +41,22 @@ public class DataInitializer {
 
             authorRepository.saveAll(List.of(author1, author2, author3, author4));
         }
+        userRepository.save(new User(
+                "at",
+                passwordEncoder.encode("at"),
+                "Ana",
+                "Todorovska",
+                Role.ROLE_ADMIN
+        ));
+
+        userRepository.save(new User(
+                "user",
+                passwordEncoder.encode("user"),
+                "user",
+                "user",
+                Role.ROLE_USER
+        ));
+
     }
+
 }

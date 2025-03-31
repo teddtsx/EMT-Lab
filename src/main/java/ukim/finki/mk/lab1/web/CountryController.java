@@ -2,8 +2,10 @@ package ukim.finki.mk.lab1.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ukim.finki.mk.lab1.model.Country;
-import ukim.finki.mk.lab1.service.CountryService;
+import ukim.finki.mk.lab1.dto.CreateCountryDto;
+import ukim.finki.mk.lab1.dto.UpdateCountryDto;
+import ukim.finki.mk.lab1.model.domain.Country;
+import ukim.finki.mk.lab1.service.domain.CountryService;
 
 import java.util.List;
 
@@ -24,16 +26,13 @@ public class CountryController {
 
     @PostMapping("/add")
     public ResponseEntity<Country> addCountry(
-            @RequestParam String name,
-            @RequestParam String continent) {
-        return ResponseEntity.ok(countryService.save(name,continent));
+            CreateCountryDto createCountryDto) {
+        return ResponseEntity.ok(countryService.save(createCountryDto).orElseThrow());
     }
     @PutMapping("/edit/{id}")
     public ResponseEntity<Country> editCountry(
-            @PathVariable Long id,
-            @RequestParam String name,
-            @RequestParam String continent) {
-        return ResponseEntity.ok(countryService.edit(id, name, continent));
+            UpdateCountryDto updateCountryDto) {
+        return ResponseEntity.ok(countryService.edit(updateCountryDto).orElseThrow());
     }
 
     @DeleteMapping("/delete/{id}")

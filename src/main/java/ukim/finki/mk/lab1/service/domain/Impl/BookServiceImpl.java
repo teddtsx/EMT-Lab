@@ -1,12 +1,15 @@
-package ukim.finki.mk.lab1.service.Impl;
+package ukim.finki.mk.lab1.service.domain.Impl;
 
 import org.springframework.stereotype.Service;
-import ukim.finki.mk.lab1.model.Author;
-import ukim.finki.mk.lab1.model.Book;
+import ukim.finki.mk.lab1.dto.CreateBookDto;
+import ukim.finki.mk.lab1.dto.UpdateAuthorDto;
+import ukim.finki.mk.lab1.dto.UpdateBookDto;
+import ukim.finki.mk.lab1.model.domain.Author;
+import ukim.finki.mk.lab1.model.domain.Book;
 import ukim.finki.mk.lab1.model.enums.Category;
 import ukim.finki.mk.lab1.repository.AuthorRepository;
 import ukim.finki.mk.lab1.repository.BookRepository;
-import ukim.finki.mk.lab1.service.BookService;
+import ukim.finki.mk.lab1.service.domain.BookService;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,23 +34,32 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id);
     }
 
+    //  @Override
+            //  public Optional <Book> save(CreateBookDto createBookDto) {
+        //
+        //      Author author = authorRepository.findById(createBookDto.author()).orElseThrow(() -> new RuntimeException("Author not found"));
+        //      Book book = new Book(createBookDto.title(),createBookDto.author(),,1);
+        //      return Optional.of(bookRepository.save(book));
+        //  }
+    //
     @Override
-    public Book save(String name, Category category, Long authorId, Integer availableCopies) {
-
-        Author author = authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
-        Book book = new Book(name, category, author, availableCopies);
-        return bookRepository.save(book);
+    public Optional<Book> save(CreateBookDto createBookDto) {
+        Author author = authorRepository.findById(Long.parseLong(createBookDto.author())).orElseThrow(() -> new RuntimeException("Author not found"));
+        Category category = Category.valueOf(createBookDto.category());
+        Book book = new Book(createBookDto.title(), category,author,createBookDto.availableCopies());
+        return Optional.of(bookRepository.save(book));
     }
 
+
     @Override
-    public Book edit(Long id, String name, Category category, Long authorId, Integer availableCopies) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
-        Author author = authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
-        book.setName(name);
-        book.setCategory(category);
+    public Optional <Book> edit(UpdateBookDto updateBookDto) {
+        Book book = bookRepository.findById(updateBookDto.id()).orElseThrow(() -> new RuntimeException("Book not found"));
+        Author author = authorRepository.findById(Long.parseLong(updateBookDto.author())).orElseThrow(() -> new RuntimeException("Author not found"));
+        book.setTitle(updateBookDto.title());
+        book.setCategory(Category.valueOf(updateBookDto.category()));
         book.setAuthor(author);
-        book.setAvailableCopies(availableCopies);
-        return bookRepository.save(book);
+        book.setAvailableCopies(updateBookDto.availableCopies());
+        return Optional.of(bookRepository.save(book));
     }
 
     @Override

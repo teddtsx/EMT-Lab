@@ -1,7 +1,7 @@
 package ukim.finki.mk.lab1.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ukim.finki.mk.lab1.model.Country;
+import ukim.finki.mk.lab1.model.domain.Country;
 
 import java.util.Optional;
 
