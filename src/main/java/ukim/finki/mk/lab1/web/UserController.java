@@ -6,13 +6,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ukim.finki.mk.lab1.dto.CreateUserDto;
 import ukim.finki.mk.lab1.dto.DisplayUserDto;
 import ukim.finki.mk.lab1.dto.LoginUserDto;
+import ukim.finki.mk.lab1.dto.WishlistDto;
 import ukim.finki.mk.lab1.model.exeptions.InvalidArgumentsException;
+import ukim.finki.mk.lab1.model.exeptions.InvalidUserCredentialsException;
 import ukim.finki.mk.lab1.model.exeptions.PasswordDoNotMatchExeption;
 import ukim.finki.mk.lab1.service.application.UserApplicationService;
+import ukim.finki.mk.lab1.service.application.WishlistService;
 
 @RestController
 @RequestMapping("/api/user")
@@ -20,9 +24,11 @@ import ukim.finki.mk.lab1.service.application.UserApplicationService;
 public class UserController {
 
     private final UserApplicationService userApplicationService;
+    private final WishlistService wishlistService;
 
-    public UserController(UserApplicationService userApplicationService) {
+    public UserController(UserApplicationService userApplicationService, WishlistService wishlistService) {
         this.userApplicationService = userApplicationService;
+        this.wishlistService = wishlistService;
     }
 
     @Operation(summary = "Register a new user", description = "Creates a new user account")
@@ -71,5 +77,30 @@ public class UserController {
     @GetMapping("/logout")
     public void logout(HttpServletRequest request) {
         request.getSession().invalidate();
+    }
+
+    @PostMapping("/{username}/wishlist/{bookId}")
+    public ResponseEntity<Void> addBookToWishlist(@PathVariable String username, @PathVariable Long bookId) {
+        try {
+            wishlistService.addBookToWishlist(username, bookId);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{username}/wishlist")
+    public ResponseEntity<WishlistDto> getWishlist(@PathVariable String username) {
+        return ResponseEntity.ok(wishlistService.getWishlist(username));
+    }
+
+    @PostMapping("/{username}/wishlist/rent")
+    public ResponseEntity<Void> rentBooksFromWishlist(@PathVariable String username) {
+        try {
+            wishlistService.rentBooksFromWishlist(username);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

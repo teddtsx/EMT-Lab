@@ -37,7 +37,7 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
             throw new BadCredentialsException("Password is incorrect!");
         }
         return new UsernamePasswordAuthenticationToken(
-                userDetails,
+                userDetails.getUsername(),
                 userDetails.getPassword(),
                 userDetails.getAuthorities()
         );
