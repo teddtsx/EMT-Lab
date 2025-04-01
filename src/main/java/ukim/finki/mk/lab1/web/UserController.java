@@ -85,7 +85,7 @@ public class UserController {
             wishlistService.addBookToWishlist(username, bookId);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -100,7 +100,7 @@ public class UserController {
             wishlistService.rentBooksFromWishlist(username);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 }
