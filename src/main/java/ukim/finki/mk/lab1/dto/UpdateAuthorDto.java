@@ -8,7 +8,11 @@ import java.util.stream.Collectors;
 
 public record UpdateAuthorDto(Long id, String name, String surname, Long country) {
     public static UpdateAuthorDto from(Author author) {
-        return  new UpdateAuthorDto(author.getId(),author.getName(),author.getSurname(),author.getCountry().getId());
+        return  new UpdateAuthorDto(
+                author.getId(),
+                author.getName(),
+                author.getSurname(),
+                author.getCountry().getId());
     }
     public static List<UpdateAuthorDto> from(List<Author> categories) {
         return categories.stream().map(UpdateAuthorDto::from).collect(Collectors.toList());

@@ -15,5 +15,6 @@ public interface BookApplicationService {
        Optional <UpdateBookDto> edit(UpdateBookDto updateBookDto);
        void deleteById(Long id);
        void markAsTaken(Long id);
+       void refreshBooksByAuthorView();
    }
 

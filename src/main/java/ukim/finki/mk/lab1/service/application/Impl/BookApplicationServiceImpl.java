@@ -2,6 +2,11 @@ package ukim.finki.mk.lab1.service.application.Impl;
 
 import ukim.finki.mk.lab1.dto.CreateBookDto;
 import ukim.finki.mk.lab1.dto.UpdateBookDto;
+import ukim.finki.mk.lab1.model.views.AuthorsByCountryView;
+import ukim.finki.mk.lab1.model.views.BooksInBadConditionView;
+import ukim.finki.mk.lab1.repository.AuthorsByCountryViewRepository;
+import ukim.finki.mk.lab1.repository.BooksByAuthorViewRepository;
+import ukim.finki.mk.lab1.repository.BooksInBadConditionViewRepository;
 import ukim.finki.mk.lab1.service.application.BookApplicationService;
 import ukim.finki.mk.lab1.service.domain.AuthorService;
 import ukim.finki.mk.lab1.service.domain.BookService;
@@ -15,11 +20,17 @@ public class BookApplicationServiceImpl implements BookApplicationService {
     private final BookService bookService;
     private final CountryService countryService;
     private final AuthorService authorService;
+    private final BooksByAuthorViewRepository booksByAuthorViewRepository;
+    private final AuthorsByCountryViewRepository authorsByCountryViewRepository;
+    private final BooksInBadConditionViewRepository booksInBadConditionViewRepository;
 
-    public BookApplicationServiceImpl(BookService bookService, CountryService countryService, AuthorService authorService) {
+    public BookApplicationServiceImpl(BookService bookService, CountryService countryService, AuthorService authorService, BooksByAuthorViewRepository booksByAuthorViewRepository, AuthorsByCountryViewRepository authorsByCountryViewRepository, BooksInBadConditionViewRepository booksInBadConditionViewRepository) {
         this.bookService = bookService;
         this.countryService = countryService;
         this.authorService = authorService;
+        this.booksByAuthorViewRepository = booksByAuthorViewRepository;
+        this.authorsByCountryViewRepository = authorsByCountryViewRepository;
+        this.booksInBadConditionViewRepository = booksInBadConditionViewRepository;
     }
 
     @Override
@@ -52,4 +63,19 @@ public class BookApplicationServiceImpl implements BookApplicationService {
     public void markAsTaken(Long id) {
         bookService.markAsTaken(id);
     }
+
+    @Override
+    public void refreshBooksByAuthorView() {
+        booksByAuthorViewRepository.refreshBooksByAuthorView();
+    }
+    @Override
+    public List<AuthorsByCountryView> getAuthorsByCountry() {
+        return authorsByCountryViewRepository.findAll();
+    }
+
+    @Override
+    public List<BooksInBadConditionView> getBooksInBadCondition() {
+        return booksInBadConditionViewRepository.findAll();
+    }
+
 }

@@ -49,21 +49,6 @@ public class DataInitializer {
 
             authorRepository.saveAll(List.of(author1, author2, author3, author4));
         }
-        userRepository.save(new User(
-                "tc",
-                passwordEncoder.encode("tc"),
-                "Teodor",
-                "Cvetkovski",
-                Role.LIBRERIAN
-        ));
-
-        userRepository.save(new User(
-                "user",
-                passwordEncoder.encode("user"),
-                "user",
-                "user",
-                Role.USER
-        ));
 
     }
 
