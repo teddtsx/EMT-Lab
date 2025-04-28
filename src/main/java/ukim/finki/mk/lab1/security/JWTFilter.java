@@ -1,5 +1,6 @@
 package ukim.finki.mk.lab1.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class JWTFilter  extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        String headerValue = request.getHeader(JWTConstants.HEADER);
+        String headerValue = request.getHeader(JWTConstants.HEADER_STRING);
         if (headerValue == null || !headerValue.startsWith(JWTConstants.TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);
             return;

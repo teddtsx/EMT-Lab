@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ukim.finki.mk.lab1.dto.CreateUserDto;
-import ukim.finki.mk.lab1.dto.DisplayUserDto;
-import ukim.finki.mk.lab1.dto.LoginDto;
-import ukim.finki.mk.lab1.dto.LoginResponseDTO;
+import ukim.finki.mk.lab1.dto.*;
 import ukim.finki.mk.lab1.model.exeptions.InvalidArgumentsException;
 import ukim.finki.mk.lab1.model.exeptions.InvalidUserCredentialsException;
 import ukim.finki.mk.lab1.model.exeptions.PasswordDoNotMatchExeption;
@@ -90,7 +87,7 @@ public class AuthenticationController {
 //        }
 //    }
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginUserDto loginDto) {
         try {
             return userApplicationService.login(loginDto)
                             .map(displayUserDto -> ResponseEntity.ok(new LoginResponseDTO(displayUserDto)))

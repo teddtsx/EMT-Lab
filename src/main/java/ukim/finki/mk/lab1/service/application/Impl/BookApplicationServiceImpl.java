@@ -68,12 +68,12 @@ public class BookApplicationServiceImpl implements BookApplicationService {
     public void refreshBooksByAuthorView() {
         booksByAuthorViewRepository.refreshBooksByAuthorView();
     }
-    @Override
+
     public List<AuthorsByCountryView> getAuthorsByCountry() {
         return authorsByCountryViewRepository.findAll();
     }
 
-    @Override
+
     public List<BooksInBadConditionView> getBooksInBadCondition() {
         return booksInBadConditionViewRepository.findAll();
     }

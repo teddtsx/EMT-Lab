@@ -3,7 +3,7 @@ package ukim.finki.mk.lab1.service.application.Impl;
 import org.springframework.stereotype.Service;
 import ukim.finki.mk.lab1.dto.CreateUserDto;
 import ukim.finki.mk.lab1.dto.DisplayUserDto;
-import ukim.finki.mk.lab1.dto.LoginDto;
+import ukim.finki.mk.lab1.dto.LoginUserDto;
 import ukim.finki.mk.lab1.model.domain.User;
 import ukim.finki.mk.lab1.security.JWTHelper;
 import ukim.finki.mk.lab1.service.application.UserApplicationService;
@@ -36,7 +36,7 @@ public class UserApplicationServiceImpl implements UserApplicationService {
     }
 
     @Override
-    public Optional<DisplayUserDto> login(LoginDto loginUserDto) {
+    public Optional<DisplayUserDto> login(LoginUserDto loginUserDto) {
         User user = userService.login(
                 loginUserDto.username(),
                 loginUserDto.password()

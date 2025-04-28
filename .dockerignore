@@ -1,0 +1,30 @@
+# Maven build files
+target/
+!target/*.jar
+
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Logs
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Docker files (not needed in build context)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Other unnecessary files
+*.md
