@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import ukim.finki.mk.lab1.model.domain.User;
 import ukim.finki.mk.lab1.service.domain.UserService;
 
@@ -22,10 +24,12 @@ public class JWTFilter  extends OncePerRequestFilter {
 
     private final JWTHelper jwtHelper;
     private final UserService userService;
+    private final HandlerExceptionResolver handlerExceptionResolver;
 
-    public JWTFilter(JWTHelper jwtHelper, UserService userService) {
+    public JWTFilter(JWTHelper jwtHelper, UserService userService, HandlerExceptionResolver handlerExceptionResolver) {
         this.jwtHelper = jwtHelper;
         this.userService = userService;
+        this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
 
@@ -62,7 +66,14 @@ public class JWTFilter  extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (JwtException jwtException) {
-            // TODO: Add logic for exception handling.
+            handlerExceptionResolver.resolveException(
+                    request,
+                    response,
+                    null,
+                    jwtException
+            );
+            return;
+
         }
 
         filterChain.doFilter(request, response);
