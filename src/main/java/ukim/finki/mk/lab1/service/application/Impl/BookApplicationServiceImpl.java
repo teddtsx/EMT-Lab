@@ -1,5 +1,6 @@
 package ukim.finki.mk.lab1.service.application.Impl;
 
+import org.springframework.stereotype.Service;
 import ukim.finki.mk.lab1.dto.CreateBookDto;
 import ukim.finki.mk.lab1.dto.UpdateBookDto;
 import ukim.finki.mk.lab1.model.views.AuthorsByCountryView;
@@ -15,7 +16,7 @@ import ukim.finki.mk.lab1.service.domain.CountryService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Service
 public class BookApplicationServiceImpl implements BookApplicationService {
     private final BookService bookService;
     private final CountryService countryService;

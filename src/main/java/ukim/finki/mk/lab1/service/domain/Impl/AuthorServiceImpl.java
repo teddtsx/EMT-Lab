@@ -9,6 +9,8 @@ import ukim.finki.mk.lab1.repository.AuthorRepository;
 import ukim.finki.mk.lab1.repository.CountryRepository;
 import ukim.finki.mk.lab1.service.domain.AuthorService;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Author> findAll() {
-        return authorRepository.findAll();
+        Iterator<Author> authorIterator= authorRepository.findAll().iterator();
+        List<Author> authors = new ArrayList<>();
+        authorIterator.forEachRemaining(authors::add);
+        return authors;
     }
 
     @Override

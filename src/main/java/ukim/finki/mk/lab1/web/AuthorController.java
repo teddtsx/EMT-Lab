@@ -46,7 +46,7 @@ public class AuthorController {
     }
     @GetMapping("/names")
     public ResponseEntity<List<AuthorProjection>> getAuthorNames() {
-        List<AuthorProjection> authorNames = authorRepository.findByName();
+        List<AuthorProjection> authorNames = authorRepository.findAuthorProjections();
         return ResponseEntity.ok(authorNames);
     }
 }
