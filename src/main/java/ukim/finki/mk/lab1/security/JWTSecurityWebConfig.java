@@ -5,14 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import ukim.finki.mk.lab1.config.CustomUsernamePasswordAuthenticationProvider;
+
 
 import java.util.List;
 
@@ -61,9 +62,9 @@ public class JWTSecurityWebConfig {
                                         "/api/authors",
                                         "/api/books"
                                 )
-                                .hasAnyRole("USER", "ADMIN")
+                                .hasAnyRole("USER", "LIBRARIAN")
                                 .anyRequest()
-                                .hasRole("ADMIN")
+                                .hasRole("LIBRARIAN")
                 )
                 .sessionManagement(sessionManagementConfigurer ->
                         sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

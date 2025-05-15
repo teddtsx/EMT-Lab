@@ -1,36 +1,55 @@
-version: '3.8'
-
+#version: '3.8'
+#services:
+#  app:
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/emt_shop
+#      - SPRING_DATASOURCE_USERNAME=emt
+#      - SPRING_DATASOURCE_PASSWORD=emt
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+#    networks:
+#      - emt-network
+#
+#  postgres:
+#    image: postgres:15
+#    ports:
+#      - "2345:5432"
+#    environment:
+#      - POSTGRES_DB=emt_shop
+#      - POSTGRES_USER=emt
+#      - POSTGRES_PASSWORD=emt
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
+#      - ./01-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+#      - ./02-views.sql:/docker-entrypoint-initdb.d/02-views.sql
+#      - ./03-data.sql:/docker-entrypoint-initdb.d/03-data.sql
+#    networks:
+#      - emt-network
+#
+#networks:
+#  emt-network:
+#    driver: bridge
+#
+#volumes:
+#  postgres-data:
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
+  db:
+    image: postgres:17.4
+    restart: always
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/emt_shop
-      - SPRING_DATASOURCE_USERNAME=emt
-      - SPRING_DATASOURCE_PASSWORD=emt
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
-    networks:
-      - emt-network
-
-  postgres:
-    image: postgres:15
+      POSTGRES_USER: emt
+      POSTGRES_PASSWORD: emt
+      POSTGRES_DB: emt_shop
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./01-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./03-views.sql:/docker-entrypoint-initdb.d/03-views.sql
+      - ./02-data.sql:/docker-entrypoint-initdb.d/02-data.sql
     ports:
       - "2345:5432"
-    environment:
-      - POSTGRES_DB=emt_shop
-      - POSTGRES_USER=emt
-      - POSTGRES_PASSWORD=emt
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - emt-network
-
-networks:
-  emt-network:
-    driver: bridge
-
 volumes:
-  postgres-data:
+  pgdata:
